@@ -10,11 +10,13 @@ export class App extends Component {
       longitude: "",
       districtid: "",
       pincode: "",
+      locationaccess: false,
       permission: false
     }
   }
   getLocation = () => {
-    this.setState({ permission: !this.state.permission });
+    this.setState({ locationaccess: !this.state.locationaccess });
+    if(this.state.permission) this.setState({ permission : false});
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(this.showPosition);
     } else {
@@ -32,6 +34,10 @@ export class App extends Component {
   changepincode = (event) => {
     this.setState({pincode : event.target.value });
   }
+   
+  setPermission = () => {
+    if(this.state.locationaccess) this.setState({permission : !this.state.permission});
+  }
   render() {
     return (
       <div>
@@ -48,7 +54,8 @@ export class App extends Component {
           <div className="checkbox">
             <label><input type="checkbox" onClick={this.getLocation} />Give Access to Location</label>
           </div>
-          {this.state.permission && <Sessions latitude={this.state.latitude} longitude={this.state.longitude} districtId={this.state.districtid} pincode={this.state.pincode} />}
+          <button type="button" className="btn btn-primary" onClick={this.setPermission}>Click here</button>
+          {!this.state.locationaccess ? <h3>Give Location Access</h3> : this.state.permission && <Sessions latitude={this.state.latitude} longitude={this.state.longitude} districtId={this.state.districtid} pincode={this.state.pincode} />}
         </div>
       </div>
     )

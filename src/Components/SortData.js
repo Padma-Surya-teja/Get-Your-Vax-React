@@ -20,12 +20,14 @@ export function SortData(arrObject, locationObject) {
         let latitude = parseFloat(locationObject.latitude);
         let distance = getDistanceFromLatLonInKm(latitude,longitude, arrObject[i].lat,arrObject[i].long);
         //Attaching returned distance from function to array elements
-        let pindist = parseFloat(arrObject[i].pincode) - parseFloat(locationObject.pincode);
+        let pindist = Math.abs(parseFloat(arrObject[i].pincode) - parseFloat(locationObject.pincode));
         arrObject[i].distance = distance;
         arrObject[i].pindist = pindist;
     }
     arrObject.sort(function (a, b) {
-        if(a.distance === b.distance) return a.pindist - b.pindist;
+        if(a.distance === b.distance){
+            return a.pindist - b.pindist;
+        }
         return a.distance - b.distance
     });
     

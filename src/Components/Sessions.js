@@ -26,8 +26,9 @@ export class Sessions extends Component {
     render() {
         return (
             <>
-                {this.state.sessions.map((element) => {
-                    return <div key={element.session_id} className="md-3" style={{padding: "3px"}}>
+                {this.state.sessions.length===0 ? <h1>No Sessions Available</h1> : this.state.sessions.map((element) => {
+                    let key = element.name+"/"+element.center_id+"/"+element.pincode;
+                    return <div key={key} className="md-3" style={{padding: "3px"}}>
                         <Session session={element} />
                     </div>
                 })}
